@@ -1,0 +1,17 @@
+# Dados gravados pelo painel em produção
+api/data/*.json
+
+# Imagens enviadas pelo painel
+uploads/*
+!uploads/.htaccess
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Ferramentas locais
+.claude/
+.vscode/
+node_modules/
