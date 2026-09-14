@@ -39,6 +39,20 @@ SRJ.defaults = {
     youtube: "https://www.youtube.com/@SindicatoRuraldeJata%C3%AD"
   },
 
+  /* ---------------- Vídeo de abertura ---------------- */
+  heroVideo: {
+    ativo: "sim",
+    video: "assets/video/hero.mp4",
+    poster: "assets/img/hero-poster.jpg",
+    eyebrow: "Sindicato Rural de Jataí · desde 1968",
+    titulo: "Força para o produtor rural",
+    texto: "Representação, capacitação e serviços para quem produz no campo.",
+    cta1Texto: "Seja um associado",
+    cta1Link: "#/associe-se",
+    cta2Texto: "Conheça o sindicato",
+    cta2Link: "#/historia"
+  },
+
   /* ---------------- Cotações do agro ---------------- */
   cotacoes: {
     data: "2026-02-23",
@@ -508,6 +522,16 @@ SRJ.schemas = [
     { k: "email", l: "E-mail principal" }, { k: "email2", l: "E-mail secundário" },
     { k: "horario", l: "Horário de atendimento" }, { k: "parque", l: "Parque de Exposições", t: "area" },
     { k: "instagram", l: "Instagram (link)" }, { k: "facebook", l: "Facebook (link)" }, { k: "youtube", l: "YouTube (link)" }
+  ]},
+  { key: "heroVideo", titulo: "Vídeo de abertura", desc: "O vídeo que abre a página inicial, antes dos destaques.", tipo: "objeto", campos: [
+    { k: "ativo", l: "Mostrar na página inicial", t: "select", opcoes: ["sim", "nao"] },
+    { k: "video", l: "Arquivo de vídeo (MP4)" },
+    { k: "poster", l: "Imagem de espera", t: "imagem" },
+    { k: "eyebrow", l: "Linha de apoio" },
+    { k: "titulo", l: "Título" },
+    { k: "texto", l: "Texto", t: "area" },
+    { k: "cta1Texto", l: "Botão 1 — texto" }, { k: "cta1Link", l: "Botão 1 — link" },
+    { k: "cta2Texto", l: "Botão 2 — texto" }, { k: "cta2Link", l: "Botão 2 — link" }
   ]},
   { key: "diretoria.titulares", titulo: "Diretoria executiva", tipo: "lista", campos: [{ k: "nome", l: "Nome" }, { k: "cargo", l: "Cargo" }] },
   { key: "diretoria.suplentes", titulo: "Suplentes", tipo: "lista", campos: [{ k: "nome", l: "Nome" }, { k: "cargo", l: "Cargo" }] },

@@ -342,8 +342,10 @@
     var agri = (c.agricultura || []).filter(function (a) { return a.unidade; });
 
     return '' +
-      /* Hero */
-      '<section class="hero wrap reveal" aria-label="Destaques">' +
+      /* Abertura em vídeo */
+      heroVideo() +
+      /* Destaques */
+      '<section class="hero wrap reveal" id="destaques" aria-label="Destaques">' +
         '<div class="slides">' + slides.map(function (s, k) {
           return '<article class="slide' + (k === 0 ? " on" : "") + '" role="group" aria-label="Destaque ' + (k + 1) + " de " + slides.length + '">' +
             '<img src="' + esc(U.img(s.img)) + '" alt=""' + (k ? ' loading="lazy"' : "") + ' decoding="async" fetchpriority="' + (k ? "low" : "high") + '">' +
@@ -463,6 +465,45 @@
           return '<a href="' + esc(p.url) + '" target="_blank" rel="noopener"><b>' + esc(p.nome) + "</b><small>" + esc(p.desc) + "</small></a>";
         }).join("") + "</div></section>" : "");
   };
+  function heroVideo() {
+    var h = C.get("heroVideo") || {};
+    if (String(h.ativo || "").toLowerCase() === "nao" || !h.video) return "";
+    var poster = U.img(h.poster || "");
+    return '<section class="hero-video" aria-label="' + U.attr(h.titulo || "Sindicato Rural de Jataí") + '">' +
+      '<video id="hv" class="hv-media" ' + (poster ? 'poster="' + esc(poster) + '" ' : "") +
+      'muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" ' +
+      'data-src="' + esc(h.video) + '"></video>' +
+      '<div class="hv-veu"></div>' +
+      '<div class="wrap hv-cont">' +
+      (h.eyebrow ? '<span class="hv-olho">' + esc(h.eyebrow) + "</span>" : "") +
+      (h.titulo ? "<h1>" + esc(h.titulo) + "</h1>" : "") +
+      (h.texto ? "<p>" + esc(h.texto) + "</p>" : "") +
+      '<div class="hv-acoes">' +
+      (h.cta1Texto ? '<a class="btn btn-accent" href="' + esc(h.cta1Link || "#/") + '">' + esc(h.cta1Texto) + " " + I.right + "</a>" : "") +
+      (h.cta2Texto ? '<a class="btn btn-outline-w" href="' + esc(h.cta2Link || "#/") + '">' + esc(h.cta2Texto) + "</a>" : "") +
+      "</div></div>" +
+      '<a class="hv-desce" href="#destaques" aria-label="Ver os destaques">' + I.chev + "</a>" +
+      "</section>";
+  }
+
+  /* Carrega o vídeo só onde faz sentido: tela larga, sem economia de dados
+     e sem preferência por menos animação. No celular fica só a imagem. */
+  function ligarHeroVideo() {
+    var v = $("#hv");
+    if (!v) return;
+    var conexao = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+    var reduz = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var lento = /(^|-)2g$/.test(String(conexao.effectiveType || ""));
+    if (window.innerWidth < 900 || reduz || conexao.saveData || lento) return;
+    var src = v.getAttribute("data-src");
+    if (!src) return;
+    v.setAttribute("src", src);
+    v.load();
+    var p = v.play();
+    if (p && p.catch) p.catch(function () { /* autoplay bloqueado: fica o poster */ });
+    v.addEventListener("playing", function () { v.classList.add("tocando"); }, { once: true });
+  }
+
   function statBox(v, l) { return '<div class="stat"><b class="num" data-count="' + esc(v) + '">' + esc(v) + "</b><small>" + esc(l) + "</small></div>"; }
   function varTag(d) {
     if (d == null || isNaN(d) || d === 0) return "";
@@ -471,6 +512,7 @@
   }
 
   function afterHome() {
+    ligarHeroVideo();
     carrossel();
     $$("[data-tab]").forEach(function (b) {
       b.addEventListener("click", function () {
@@ -1079,7 +1121,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=12";
+    s.src = "js/admin.js?v=14";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;
