@@ -15,3 +15,6 @@ desktop.ini
 .claude/
 .vscode/
 node_modules/
+
+# Pacotes gerados para upload
+*.zip

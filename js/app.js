@@ -270,13 +270,13 @@
       lista.map(function (c) { return "<span>" + (c.href ? '<a href="' + c.href + '">' + esc(c.t) + "</a>" : esc(c.t)) + "</span>"; }).join("") + "</nav>";
   }
   function pageHead(t, lead, cr) {
-    return '<header class="page-head">' + crumbs(cr || [{ t: t }]) + "<h1>" + esc(t) + "</h1>" +
-      (lead ? '<p class="lead">' + esc(lead) + "</p>" : "") + "</header>";
+    return '<header class="page-head"><div class="wrap">' + crumbs(cr || [{ t: t }]) + "<h1>" + esc(t) + "</h1>" +
+      (lead ? '<p class="lead">' + esc(lead) + "</p>" : "") + "</div></header>";
   }
   function pageHero(t, lead, img, cr) {
-    return '<header class="page-hero"><div class="ph-img"><img src="' + esc(img) + '" alt="" decoding="async"></div>' +
+    return '<div class="wrap"><header class="page-hero"><div class="ph-img"><img src="' + esc(img) + '" alt="" decoding="async"></div>' +
       '<div class="cont">' + crumbs(cr || [{ t: t }]) + "<h1>" + esc(t) + "</h1>" +
-      (lead ? "<p>" + esc(lead) + "</p>" : "") + "</div></header>";
+      (lead ? "<p>" + esc(lead) + "</p>" : "") + "</div></header></div>";
   }
   function kick(n) {
     var laranja = (n.cat === "Eventos" || n.cat === "Avisos") ? " laranja" : "";
@@ -1094,7 +1094,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=8";
+    s.src = "js/admin.js?v=9";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;
