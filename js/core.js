@@ -197,6 +197,25 @@
   /* =====================================================================
      Imagens
      ===================================================================== */
+  /* O site guarda cada foto em .jpg e .webp. Quando o navegador aceita
+     WebP, usamos o arquivo menor; senao fica o JPG original.
+     Só vale para assets/: imagens enviadas pelo painel nao tem versao WebP. */
+  SRJ.webp = false;
+  U.detectarWebp = function () {
+    return new Promise(function (res) {
+      var img = new Image();
+      img.onload = function () { SRJ.webp = img.width === 1 && img.height === 1; res(SRJ.webp); };
+      img.onerror = function () { SRJ.webp = false; res(false); };
+      img.src = "data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==";
+    });
+  };
+  U.img = function (src) {
+    src = String(src || "");
+    if (!SRJ.webp) return src;
+    if (src.indexOf("assets/") !== 0) return src;
+    return src.replace(/\.(jpe?g|png)$/i, ".webp");
+  };
+
   U.reduzirImagem = function (file, max, q) {
     return new Promise(function (res, rej) {
       var url = URL.createObjectURL(file);

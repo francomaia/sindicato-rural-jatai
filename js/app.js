@@ -148,7 +148,7 @@
     }).join("");
     $("#header").innerHTML = '<div class="wrap">' +
       '<a class="brand" href="#/" aria-label="Sindicato Rural de Jataí, ir para o início">' +
-      '<img src="assets/logo.png" alt="" width="64" height="64" decoding="async">' +
+      '<img src="' + U.img("assets/logo.png") + '" alt="" width="64" height="64" decoding="async">' +
       '<span class="txt"><b>Sindicato Rural</b><small>Jataí · Goiás</small></span></a>' +
       '<nav class="nav" aria-label="Menu principal"><ul>' + itens + "</ul></nav>" +
       '<div class="hdr-actions">' +
@@ -172,7 +172,7 @@
   function renderDrawer() {
     var d = $("#drawer");
     d.innerHTML = '<div class="scrim"></div><div class="panel" role="dialog" aria-modal="true" aria-label="Menu">' +
-      '<div class="dhead"><a class="brand" href="#/"><img src="assets/logo.png" alt="" width="44" height="44"><span class="txt"><b>Sindicato Rural</b><small>Jataí · Goiás</small></span></a>' +
+      '<div class="dhead"><a class="brand" href="#/"><img src="' + U.img("assets/logo.png") + '" alt="" width="44" height="44"><span class="txt"><b>Sindicato Rural</b><small>Jataí · Goiás</small></span></a>' +
       '<button type="button" class="icon-btn close" aria-label="Fechar menu">' + I.close + "</button></div>" +
       MENU.map(function (m) {
         if (m.items) {
@@ -232,7 +232,7 @@
     $("#footer").innerHTML = '<div class="wrap">' +
       '<div class="top">' +
       "<div>" +
-      '<a class="brand" href="#/"><img src="assets/logo.png" alt="" width="56" height="56" loading="lazy" decoding="async"><span class="txt"><b>' + esc(i.nome) + "</b><small>Desde " + esc(i.desde) + "</small></span></a>" +
+      '<a class="brand" href="#/"><img src="' + U.img("assets/logo.png") + '" alt="" width="56" height="56" loading="lazy" decoding="async"><span class="txt"><b>' + esc(i.nome) + "</b><small>Desde " + esc(i.desde) + "</small></span></a>" +
       '<p class="addr">' + esc(i.endereco) + "<br>" + esc(i.cidade) + " — " + esc(i.cep) + "<br>" +
       '<a href="' + SRJ.tel() + '">' + esc(i.telefone) + '</a> · <a href="' + SRJ.wa() + '" target="_blank" rel="noopener">' + esc(i.whatsapp) + "</a><br>" +
       '<a href="mailto:' + esc(i.email) + '">' + esc(i.email) + "</a></p>" +
@@ -274,7 +274,7 @@
       (lead ? '<p class="lead">' + esc(lead) + "</p>" : "") + "</div></header>";
   }
   function pageHero(t, lead, img, cr) {
-    return '<div class="wrap"><header class="page-hero"><div class="ph-img"><img src="' + esc(img) + '" alt="" decoding="async"></div>' +
+    return '<div class="wrap"><header class="page-hero"><div class="ph-img"><img src="' + esc(U.img(img)) + '" alt="" decoding="async"></div>' +
       '<div class="cont">' + crumbs(cr || [{ t: t }]) + "<h1>" + esc(t) + "</h1>" +
       (lead ? "<p>" + esc(lead) + "</p>" : "") + "</div></header></div>";
   }
@@ -284,7 +284,7 @@
   }
   function card(n, grande) {
     return '<article class="card' + (grande ? " big" : "") + (n.img ? "" : " no-img") + '">' +
-      (n.img ? '<a class="img" href="#/noticia/' + esc(n.slug) + '" tabindex="-1" aria-hidden="true"><img src="' + esc(n.img) + '" alt="" loading="lazy" decoding="async"></a>' : "") +
+      (n.img ? '<a class="img" href="#/noticia/' + esc(n.slug) + '" tabindex="-1" aria-hidden="true"><img src="' + esc(U.img(n.img)) + '" alt="" loading="lazy" decoding="async"></a>' : "") +
       '<div class="body">' + kick(n) +
       '<h3><a href="#/noticia/' + esc(n.slug) + '">' + esc(n.titulo) + "</a></h3>" +
       "<p>" + esc(n.resumo) + "</p>" +
@@ -361,7 +361,7 @@
       '<section class="hero wrap reveal" aria-label="Destaques">' +
         '<div class="slides">' + slides.map(function (s, k) {
           return '<article class="slide' + (k === 0 ? " on" : "") + '" role="group" aria-label="Destaque ' + (k + 1) + " de " + slides.length + '">' +
-            '<img src="' + esc(s.img) + '" alt=""' + (k ? ' loading="lazy"' : "") + ' decoding="async" fetchpriority="' + (k ? "low" : "high") + '">' +
+            '<img src="' + esc(U.img(s.img)) + '" alt=""' + (k ? ' loading="lazy"' : "") + ' decoding="async" fetchpriority="' + (k ? "low" : "high") + '">' +
             '<div class="cont"><span class="kicker">' + esc(s.kicker) + "</span>" +
             "<h2>" + esc(s.t) + "</h2><p>" + esc(s.p) + "</p>" +
             '<a class="cta" href="' + s.href + '">' + esc(s.cta) + " " + I.right + "</a></div></article>";
@@ -430,14 +430,14 @@
         sec("Espaços para locação", { href: "#/locacoes", t: "Todos os espaços" }, "Do salão de reunião para 25 pessoas ao pavilhão para 3.000, na sede e no Parque de Exposições.") +
         '<div class="hscroll">' + locacoes.map(function (l) {
           return '<a class="space-card" href="#/locacoes?ir=' + esc(U.slugify(l.nome)) + '">' +
-            '<div class="img"><img src="' + esc(l.img || "assets/img/sede.jpg") + '" alt="" loading="lazy" decoding="async"></div>' +
+            '<div class="img"><img src="' + esc(U.img(l.img || "assets/img/sede.jpg")) + '" alt="" loading="lazy" decoding="async"></div>' +
             '<div class="body"><h3>' + esc(l.nome) + "</h3>" +
             '<span class="cap"><b class="num">' + esc(l.capacidade) + "</b> pessoas</span></div></a>";
         }).join("") + "</div></section>" : "") +
 
       /* Equoterapia */
       '<section class="section wrap reveal"><div class="equo">' +
-        '<div class="img"><img src="assets/img/equoterapia.jpg" alt="Atendimento de equoterapia no Centro Primeiro Passo" loading="lazy" decoding="async"></div>' +
+        '<div class="img"><img src="' + U.img("assets/img/equoterapia.jpg") + '" alt="Atendimento de equoterapia no Centro Primeiro Passo" loading="lazy" decoding="async"></div>' +
         '<div class="body"><span class="kick">' + esc(equo.nome) + ' <span class="cat">· desde ' + esc(equo.desde) + "</span></span>" +
         "<h2>Equoterapia gratuita para quem mais precisa</h2>" +
         '<p class="txt">' + esc(equo.texto) + "</p>" +
@@ -467,7 +467,7 @@
             '<a class="btn btn-ghost" href="' + SRJ.wa("Olá! Sou empregador e tenho uma vaga rural para divulgar.") + '" target="_blank" rel="noopener">Sou empregador</a></div>' +
             (fotos.length ? '<div class="mini-gal-head"><h3>Galeria</h3><a href="#/galeria-fotos">Ver fotos</a></div>' +
               '<div class="gal three mini">' + fotos.slice(0, 6).map(function (f, k) {
-                return '<figure data-lb="' + k + '"><img src="' + esc(f.src) + '" alt="' + U.attr(f.legenda) + '" loading="lazy" decoding="async"></figure>';
+                return '<figure data-lb="' + k + '"><img src="' + esc(U.img(f.src)) + '" alt="' + U.attr(f.legenda) + '" loading="lazy" decoding="async"></figure>';
               }).join("") + "</div>" : "") +
           "</div></div>" +
       "</section>" +
@@ -594,7 +594,7 @@
           return '<li style="--i:' + k + '"><span class="y">' + esc(m.ano) + "</span><div><h3>" + esc(m.titulo) + "</h3><p>" + esc(m.texto) + "</p></div></li>";
         }).join("") + "</ol>" : "") + "</div>" +
       '<aside class="reveal" style="--d:80ms">' +
-      '<figure class="side-fig"><img src="assets/img/historia2.jpg" alt="Lideranças rurais nas primeiras exposições" loading="lazy" decoding="async"><figcaption>Lideranças rurais nas primeiras exposições agropecuárias de Jataí.</figcaption></figure>' +
+      '<figure class="side-fig"><img src="' + U.img("assets/img/historia2.jpg") + '" alt="Lideranças rurais nas primeiras exposições" loading="lazy" decoding="async"><figcaption>Lideranças rurais nas primeiras exposições agropecuárias de Jataí.</figcaption></figure>' +
       (h.presidentes && h.presidentes.length ? '<div class="aside-box"><h3>Presidentes</h3><ul class="pres-list">' +
         h.presidentes.map(function (p) { return "<li>" + esc(p.nome) + "<span>" + esc(p.periodo || "—") + "</span></li>"; }).join("") + "</ul></div>" : "") +
       "</aside></section>";
@@ -620,7 +620,7 @@
   }
   function pessoa(p, destaque, k) {
     return '<div class="person' + (destaque ? " lead" : "") + '" style="--i:' + (k || 0) + '">' +
-      '<div class="av">' + (p.img ? '<img src="' + esc(p.img) + '" alt="" loading="lazy">' : esc(iniciais(p.nome))) + "</div>" +
+      '<div class="av">' + (p.img ? '<img src="' + esc(U.img(p.img)) + '" alt="" loading="lazy">' : esc(iniciais(p.nome))) + "</div>" +
       "<div><b>" + esc(p.nome) + "</b>" + (p.cargo ? "<small>" + esc(p.cargo) + "</small>" : "") + "</div></div>";
   }
 
@@ -697,7 +697,7 @@
       '<div class="note reveal">Associados têm desconto na locação. Orçamentos e reservas pelo telefone ' + esc(i.telefone) + " ou WhatsApp " + esc(i.whatsapp) + ".</div>" +
       (l.length ? '<div class="news-list mt">' + l.map(function (x, k) {
         return '<article class="space-card full reveal" id="' + esc(U.slugify(x.nome)) + '" style="--d:' + (k % 3 * 60) + 'ms">' +
-          '<div class="img"><img src="' + esc(x.img || "assets/img/sede.jpg") + '" alt="' + U.attr(x.nome) + '" loading="lazy" decoding="async"></div>' +
+          '<div class="img"><img src="' + esc(U.img(x.img || "assets/img/sede.jpg")) + '" alt="' + U.attr(x.nome) + '" loading="lazy" decoding="async"></div>' +
           '<div class="body"><h3>' + esc(x.nome) + "</h3>" +
           '<span class="cap"><b class="num">' + esc(x.capacidade) + "</b> pessoas</span>" +
           '<span class="loc">' + I.pin + "<span>" + esc(x.local) + "</span></span>" +
@@ -877,7 +877,7 @@
         (n.resumo ? '<p class="lead">' + esc(n.resumo) + "</p>" : "") +
         '<div class="byline"><div class="av">' + esc(iniciais(n.autor) || "SRJ") + "</div>" +
         "<div><b>" + esc(n.autor) + "</b><small>Publicado em " + U.fmtLong(n.data) + "</small></div></div></header>" +
-      (n.img ? '<figure class="article-cover"><img src="' + esc(n.img) + '" alt="' + U.attr(n.imgAlt || "") + '" decoding="async">' +
+      (n.img ? '<figure class="article-cover"><img src="' + esc(U.img(n.img)) + '" alt="' + U.attr(n.imgAlt || "") + '" decoding="async">' +
         (n.imgLegenda ? "<figcaption>" + esc(n.imgLegenda) + "</figcaption>" : "") + "</figure>" : "") +
       '<div class="article-grid"><article>' +
         '<div class="prose">' + corpo + "</div>" +
@@ -918,7 +918,7 @@
     State.fotosAtivas = fotos;
     return pageHead("Galeria de fotos", "Registros do Sindicato, do Parque de Exposições, da equoterapia e da história rural de Jataí.", [{ t: "Galerias" }, { t: "Fotos" }]) +
       '<section class="wrap">' + (fotos.length ? '<div class="gal">' + fotos.map(function (f, k) {
-        return '<figure data-lb="' + k + '" class="reveal" style="--d:' + (k % 4 * 60) + 'ms"><img src="' + esc(f.src) + '" alt="' + U.attr(f.legenda) + '" loading="lazy" decoding="async">' +
+        return '<figure data-lb="' + k + '" class="reveal" style="--d:' + (k % 4 * 60) + 'ms"><img src="' + esc(U.img(f.src)) + '" alt="' + U.attr(f.legenda) + '" loading="lazy" decoding="async">' +
           (f.legenda ? "<figcaption>" + esc(f.legenda) + "</figcaption>" : "") + "</figure>";
       }).join("") + "</div>" : vazio("Nenhuma foto publicada ainda.")) + "</section>";
   };
@@ -950,7 +950,7 @@
       (cv.length ? '<div class="news-list">' + cv.map(function (c, k) {
         var link = c.link || "";
         return '<article class="card' + (c.img ? "" : " no-img") + ' reveal" style="--d:' + (k % 3 * 60) + 'ms">' +
-          (c.img ? '<div class="img"><img src="' + esc(c.img) + '" alt="" loading="lazy" decoding="async"></div>' : "") +
+          (c.img ? '<div class="img"><img src="' + esc(U.img(c.img)) + '" alt="" loading="lazy" decoding="async"></div>' : "") +
           '<div class="body"><span class="kick">' + esc(c.area) + "</span><h3>" + esc(c.nome) + "</h3>" +
           '<p class="long">' + esc(c.beneficio) + "</p>" +
           (link ? '<a class="maislink" href="' + esc(link) + '"' + (/^https?:/.test(link) ? ' target="_blank" rel="noopener"' : "") + ">Saiba mais " + U.inline("right") + "</a>" : "") +
@@ -1094,7 +1094,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=9";
+    s.src = "js/admin.js?v=10";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;
@@ -1440,7 +1440,8 @@
     ligarGlobais();
     $("#app").innerHTML = '<section class="wrap"><div class="carregando"><span class="spin"></span> Carregando…</div></section>';
 
-    Store.init()
+    U.detectarWebp()
+      .then(function () { return Store.init(); })
       .then(function () { return C.carregar(); })
       .then(function () { return Store.posts(); })
       .then(function (p) { State.posts = p && p.length ? p : JSON.parse(JSON.stringify(SRJ.postsIniciais)); })
