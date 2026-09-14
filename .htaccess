@@ -19,6 +19,22 @@ DirectoryIndex index.html
   RewriteRule ^uploads/.*\.(php|phtml|php[0-9]|phar|cgi|pl|sh|py|asp|aspx|jsp)$ - [F,L]
 </IfModule>
 
+# Servir WebP automaticamente quando o navegador aceitar.
+# Os arquivos .jpg/.png continuam no lugar como reserva para navegadores
+# antigos (Safari 13, IE) — nenhuma alteracao e necessaria no HTML.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_ACCEPT} image/webp
+  RewriteCond %{DOCUMENT_ROOT}/$1.webp -f
+  RewriteRule ^(.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=trocou:1,L]
+</IfModule>
+<IfModule mod_headers.c>
+  Header append Vary Accept env=REDIRECT_trocou
+</IfModule>
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+</IfModule>
+
 # Bloquear acesso a arquivos internos
 <FilesMatch "^(\.htaccess|\.gitignore|README\.md|.*\.json)$">
   <IfModule mod_authz_core.c>
