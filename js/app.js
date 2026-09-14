@@ -242,7 +242,8 @@
       "</div>" +
       '<div class="bottom">' +
       "<span>© " + new Date().getFullYear() + " " + esc(i.sigla) + " — " + esc(i.nome) + ". Todos os direitos reservados.</span>" +
-      '<span class="creditos"><a href="#/mapa-do-site">Mapa do site</a> · Desenvolvido por <a href="https://instagram.com/ofrancomaia" target="_blank" rel="noopener">@ofrancomaia</a></span>' +
+      '<span class="creditos"><a href="#/mapa-do-site">Mapa do site</a> · <a href="#/redacao">' + I.key + "Redação</a> · Desenvolvido por " +
+      '<a href="https://instagram.com/ofrancomaia" target="_blank" rel="noopener">@ofrancomaia</a></span>' +
       "</div></div>";
   }
 
@@ -1078,7 +1079,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=11";
+    s.src = "js/admin.js?v=12";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;

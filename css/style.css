@@ -1105,7 +1105,9 @@ a.space-card:hover { transform: translateY(-4px); box-shadow: var(--sombra-2); b
   display: flex; justify-content: space-between; gap: var(--s3); flex-wrap: wrap;
   padding: var(--s4) 0; border-top: 1px solid rgba(255, 255, 255, .11); font-size: .78rem;
 }
-.footer .creditos a { text-decoration: underline; text-underline-offset: 2px; }
+.footer .creditos { display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap; }
+.footer .creditos a { text-decoration: underline; text-underline-offset: 2px; display: inline-flex; align-items: center; gap: 4px; }
+.footer .creditos svg { width: 13px; height: 13px; }
 
 .fab-wa {
   position: fixed; right: 20px; bottom: 20px; z-index: 50;
