@@ -122,22 +122,6 @@
   /* =====================================================================
      Componentes de layout
      ===================================================================== */
-  function renderA11y() {
-    var pressed = document.documentElement.classList.contains("hc");
-    $("#a11y").innerHTML = '<div class="wrap">' +
-      '<ul>' +
-      '<li><a href="#conteudo">' + I.a11y + "<span>Acessibilidade</span></a></li>" +
-      '<li><button type="button" data-act="hc" aria-pressed="' + pressed + '">' + I.contrast + "<span>Alto contraste</span></button></li>" +
-      '<li><button type="button" data-act="fm" aria-label="Diminuir fonte">' + I.fontm + "<span>A-</span></button></li>" +
-      '<li><button type="button" data-act="fp" aria-label="Aumentar fonte">' + I.fontp + "<span>A+</span></button></li>" +
-      '<li><a href="#/mapa-do-site">' + I.map + "<span>Mapa do site</span></a></li>" +
-      "</ul>" +
-      '<ul class="right">' +
-      '<li><a href="' + SRJ.wa() + '" target="_blank" rel="noopener">' + I.wa + "<span>" + esc(C.get("info").whatsapp) + "</span></a></li>" +
-      '<li><a href="#/redacao">' + I.key + "<span>Redação</span></a></li>" +
-      "</ul></div>";
-  }
-
   function renderHeader() {
     var itens = MENU.map(function (m) {
       if (m.items) {
@@ -1094,7 +1078,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=10";
+    s.src = "js/admin.js?v=11";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;
@@ -1374,28 +1358,6 @@
      Eventos globais
      ===================================================================== */
   function ligarGlobais() {
-    var html = document.documentElement;
-    var prefs = {};
-    try { prefs = JSON.parse(localStorage.getItem("srj_prefs") || "{}"); } catch (e) {}
-    if (prefs.hc) html.classList.add("hc");
-    if (prefs.fs) html.style.setProperty("--fs", prefs.fs);
-
-    $("#a11y").addEventListener("click", function (e) {
-      var b = e.target.closest ? e.target.closest("[data-act]") : null;
-      if (!b) return;
-      if (b.dataset.act === "hc") {
-        var on = html.classList.toggle("hc");
-        b.setAttribute("aria-pressed", String(on));
-        prefs.hc = on;
-      } else {
-        var fs = parseFloat(getComputedStyle(html).getPropertyValue("--fs")) || 1;
-        fs = Math.min(1.4, Math.max(0.85, fs + (b.dataset.act === "fp" ? 0.1 : -0.1)));
-        html.style.setProperty("--fs", fs.toFixed(2));
-        prefs.fs = fs.toFixed(2);
-      }
-      try { localStorage.setItem("srj_prefs", JSON.stringify(prefs)); } catch (err) {}
-    });
-
     var hdr = $("#header"), top = $("#to-top"), ultimo = 0;
     window.addEventListener("scroll", function () {
       var y = window.pageYOffset || document.documentElement.scrollTop;
@@ -1431,7 +1393,7 @@
      Início
      ===================================================================== */
   function montarCasca() {
-    renderA11y(); renderHeader(); renderDrawer(); renderTicker(); renderFooter(); renderBusca();
+    renderHeader(); renderDrawer(); renderTicker(); renderFooter(); renderBusca();
   }
   SRJ.montarCasca = montarCasca;
 
