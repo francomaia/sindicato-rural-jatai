@@ -471,7 +471,7 @@
     var poster = U.img(h.poster || "");
     return '<section class="hero-video" aria-label="' + U.attr(h.titulo || "Sindicato Rural de Jataí") + '">' +
       '<video id="hv" class="hv-media" ' + (poster ? 'poster="' + esc(poster) + '" ' : "") +
-      'muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" ' +
+      'muted loop playsinline autoplay preload="none" tabindex="-1" aria-hidden="true" ' +
       'data-src="' + esc(h.video) + '"></video>' +
       '<div class="hv-veu"></div>' +
       '<div class="wrap hv-cont">' +
@@ -482,26 +482,53 @@
       (h.cta1Texto ? '<a class="btn btn-accent" href="' + esc(h.cta1Link || "#/") + '">' + esc(h.cta1Texto) + " " + I.right + "</a>" : "") +
       (h.cta2Texto ? '<a class="btn btn-outline-w" href="' + esc(h.cta2Link || "#/") + '">' + esc(h.cta2Texto) + "</a>" : "") +
       "</div></div>" +
-      '<a class="hv-desce" href="#destaques" aria-label="Ver os destaques">' + I.chev + "</a>" +
       "</section>";
   }
 
-  /* Carrega o vídeo só onde faz sentido: tela larga, sem economia de dados
-     e sem preferência por menos animação. No celular fica só a imagem. */
+  /* Carrega o vídeo em tela larga e fora do modo de economia de dados.
+     No celular fica só a imagem, para não gastar o pacote de quem acessa
+     pelo 4G. */
   function ligarHeroVideo() {
     var v = $("#hv");
     if (!v) return;
     var conexao = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
-    var reduz = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var lento = /(^|-)2g$/.test(String(conexao.effectiveType || ""));
-    if (window.innerWidth < 900 || reduz || conexao.saveData || lento) return;
+    if (conexao.saveData || lento) return;
     var src = v.getAttribute("data-src");
     if (!src) return;
+    /* Em tela estreita fica só o poster, para não gastar o pacote de dados.
+       Se a janela crescer depois, o vídeo entra. */
+    if (window.innerWidth < 820) {
+      var aoRedimensionar = function () {
+        if (window.innerWidth >= 820) {
+          window.removeEventListener("resize", aoRedimensionar);
+          if (document.body.contains(v)) ligarHeroVideo();
+        }
+      };
+      window.addEventListener("resize", aoRedimensionar);
+      return;
+    }
+
+    v.muted = true;            // exigido pelos navegadores para tocar sozinho
+    v.defaultMuted = true;
     v.setAttribute("src", src);
     v.load();
-    var p = v.play();
-    if (p && p.catch) p.catch(function () { /* autoplay bloqueado: fica o poster */ });
     v.addEventListener("playing", function () { v.classList.add("tocando"); }, { once: true });
+
+    function tocar() {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { /* ainda bloqueado */ });
+    }
+    tocar();
+    v.addEventListener("canplay", tocar, { once: true });
+    /* Alguns navegadores só liberam depois de um toque na página. */
+    var naPrimeiraInteracao = function () {
+      if (v.paused) tocar();
+      document.removeEventListener("pointerdown", naPrimeiraInteracao);
+      document.removeEventListener("keydown", naPrimeiraInteracao);
+    };
+    document.addEventListener("pointerdown", naPrimeiraInteracao, { passive: true });
+    document.addEventListener("keydown", naPrimeiraInteracao);
   }
 
   function statBox(v, l) { return '<div class="stat"><b class="num" data-count="' + esc(v) + '">' + esc(v) + "</b><small>" + esc(l) + "</small></div>"; }
@@ -1121,7 +1148,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=14";
+    s.src = "js/admin.js?v=16";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;

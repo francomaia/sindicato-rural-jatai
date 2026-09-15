@@ -431,18 +431,7 @@ a.chip:hover { border-color: var(--verde-logo); transform: translateY(-1px); col
   max-width: 46ch; text-shadow: 0 1px 16px rgba(8, 24, 14, .4);
 }
 .hero-video .hv-acoes { display: flex; gap: var(--s3); flex-wrap: wrap; margin-top: var(--s2); }
-.hero-video .hv-desce {
-  position: absolute; left: 50%; bottom: var(--s4); z-index: 3;
-  width: 40px; height: 40px; margin-left: -20px; border-radius: 50%;
-  display: grid; place-items: center; color: #fff;
-  background: rgba(255, 255, 255, .14); border: 1px solid rgba(255, 255, 255, .28);
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-  animation: respira 2.6s var(--ease-suave) infinite;
-  transition: background .25s, transform .25s var(--ease);
-}
-.hero-video .hv-desce:hover { background: rgba(255, 255, 255, .26); transform: translateY(2px); }
-.hero-video .hv-desce svg { width: 18px; height: 18px; }
-@keyframes respira { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+ 50% { transform: translateY(5px); } }
 /* a abertura em vídeo já é o topo: o carrossel vem logo abaixo */
 .hero-video + .hero { margin-top: var(--s7); }
 
@@ -1582,7 +1571,6 @@ kbd { padding: 1px 6px; border: 1px solid var(--linha-forte); border-bottom-widt
   .hero-video { min-height: 380px; height: 62vh; }
   .hero-video .hv-acoes { width: 100%; }
   .hero-video .hv-acoes .btn { flex: 1 1 auto; justify-content: center; }
-  .hero-video .hv-desce { display: none; }
 
   :root { --gutter: 16px; --header-h: 64px; }
   body { font-size: .97rem; }
