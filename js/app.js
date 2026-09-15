@@ -1184,7 +1184,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=21";
+    s.src = "js/admin.js?v=23";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;

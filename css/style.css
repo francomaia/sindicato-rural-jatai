@@ -949,10 +949,18 @@ a.space-card:hover { transform: translateY(-4px); box-shadow: var(--sombra-2); b
 }
 .fp-logos a.com-fundo:hover { opacity: 1; }
 .fp-logos a.com-fundo img { height: 26px; }
+.fp-logos a.com-fundo.alto img { height: 32px; }
 .fp-logos img { height: 34px; width: auto; max-width: 160px; object-fit: contain; }
+/* Parceiro sem arquivo de logo: vira uma assinatura tipográfica,
+   com o mesmo peso visual dos logos ao lado */
 .fp-nome {
-  color: #fff; font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em;
-  padding-bottom: 3px; border-bottom: 2px solid rgba(255, 255, 255, .28);
+  display: inline-flex; align-items: center; gap: 7px;
+  color: #fff; font-size: 1.32rem; font-weight: 800;
+  letter-spacing: -.04em; line-height: 1; text-transform: uppercase;
+}
+.fp-nome::before {
+  content: ""; width: 5px; height: 1.05em; border-radius: 3px;
+  background: var(--verde-logo); flex: 0 0 auto;
 }
 
 /* ---------------------------------------------------------------------
@@ -1668,6 +1676,7 @@ kbd { padding: 1px 6px; border: 1px solid var(--linha-forte); border-bottom-widt
   .fp-logos { gap: var(--s5) var(--s6); }
   .fp-logos img { height: 28px; max-width: 132px; }
   .fp-logos a.com-fundo img { height: 22px; }
+  .fp-nome { font-size: 1.1rem; }
   .fp-logos a.com-fundo { padding: 7px 12px; }
   .fp-titulo { margin-bottom: var(--s5); }
   .hero-video { min-height: 380px; height: 62vh; }

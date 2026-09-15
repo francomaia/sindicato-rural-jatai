@@ -303,7 +303,7 @@ SRJ.defaults = {
     { nome: "Sindicato Rural de Jataí", desc: "Representação do produtor rural do município", url: "#/historia", logo: "assets/logos/sindicato-rural.svg", fundo: "nao" },
     { nome: "Faeg", desc: "Federação da Agricultura e Pecuária de Goiás", url: "https://sistemafaeg.com.br/", logo: "assets/logos/faeg.svg", fundo: "nao" },
     { nome: "Senar Goiás", desc: "Serviço Nacional de Aprendizagem Rural", url: "https://sistemafaeg.com.br/senar/", logo: "assets/logos/senar.svg", fundo: "nao" },
-    { nome: "Ifag", desc: "Instituto para o Fortalecimento da Agropecuária de Goiás", url: "https://sistemafaeg.com.br/ifag/", logo: "", fundo: "nao" },
+    { nome: "Ifag", desc: "Instituto para o Fortalecimento da Agropecuária de Goiás", url: "https://sistemafaeg.com.br/ifag/", logo: "assets/logos/ifag.png", fundo: "sim" },
     { nome: "Agrodefesa", desc: "Agência Goiana de Defesa Agropecuária", url: "https://www.agrodefesa.go.gov.br/", logo: "assets/logos/agrodefesa.png", fundo: "sim" }
   ]
 };
