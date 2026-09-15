@@ -300,11 +300,11 @@ SRJ.defaults = {
 
   /* ---------------- Parceiros institucionais (rodapé da home) ---------------- */
   parceiros: [
-    { nome: "Sindicato Rural de Jataí", desc: "Representação do produtor rural do município", url: "#/historia", logo: "assets/logos/sindicato-rural.svg" },
-    { nome: "Faeg", desc: "Federação da Agricultura e Pecuária de Goiás", url: "https://sistemafaeg.com.br/", logo: "assets/logos/faeg.svg" },
-    { nome: "Senar Goiás", desc: "Serviço Nacional de Aprendizagem Rural", url: "https://sistemafaeg.com.br/senar/", logo: "assets/logos/senar.svg" },
-    { nome: "Ifag", desc: "Instituto para o Fortalecimento da Agropecuária de Goiás", url: "https://sistemafaeg.com.br/ifag/", logo: "" },
-    { nome: "Agrodefesa", desc: "Agência Goiana de Defesa Agropecuária", url: "https://www.agrodefesa.go.gov.br/", logo: "" }
+    { nome: "Sindicato Rural de Jataí", desc: "Representação do produtor rural do município", url: "#/historia", logo: "assets/logos/sindicato-rural.svg", fundo: "nao" },
+    { nome: "Faeg", desc: "Federação da Agricultura e Pecuária de Goiás", url: "https://sistemafaeg.com.br/", logo: "assets/logos/faeg.svg", fundo: "nao" },
+    { nome: "Senar Goiás", desc: "Serviço Nacional de Aprendizagem Rural", url: "https://sistemafaeg.com.br/senar/", logo: "assets/logos/senar.svg", fundo: "nao" },
+    { nome: "Ifag", desc: "Instituto para o Fortalecimento da Agropecuária de Goiás", url: "https://sistemafaeg.com.br/ifag/", logo: "", fundo: "nao" },
+    { nome: "Agrodefesa", desc: "Agência Goiana de Defesa Agropecuária", url: "https://www.agrodefesa.go.gov.br/", logo: "assets/logos/agrodefesa.png", fundo: "sim" }
   ]
 };
 
@@ -567,5 +567,6 @@ SRJ.schemas = [
     { k: "icone", l: "Ícone", t: "select", opcoes: ["ribbon", "chart", "cloud", "doc", "users", "cap", "gavel", "building"] } ]},
   { key: "parceiros", titulo: "Parceiros institucionais", desc: "Faixa de logos no fim da página inicial. Sem logo, aparece o nome escrito.", tipo: "lista", campos: [
     { k: "nome", l: "Nome" }, { k: "desc", l: "Descrição" }, { k: "url", l: "Link" },
-    { k: "logo", l: "Arquivo do logo (versão branca)" } ]}
+    { k: "logo", l: "Arquivo do logo" },
+    { k: "fundo", l: "Logo colorido (ganha fundo branco)", t: "select", opcoes: ["nao", "sim"] } ]}
 ];

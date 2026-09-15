@@ -482,10 +482,12 @@
         '<h2 class="fp-titulo">Parceiros institucionais</h2>' +
         '<div class="fp-logos">' + parceiros.map(function (p) {
           var externo = /^https?:/.test(p.url || "");
+          var claro = String(p.fundo || "").toLowerCase() === "sim";
           var dentro = p.logo
-            ? '<img src="' + esc(p.logo) + '" alt="' + U.attr(p.nome) + '" loading="lazy" decoding="async">'
+            ? '<img src="' + esc(U.img(p.logo)) + '" alt="' + U.attr(p.nome) + '" loading="lazy" decoding="async">'
             : '<span class="fp-nome">' + esc(p.nome) + "</span>";
-          return '<a href="' + esc(p.url || "#/") + '"' + (externo ? ' target="_blank" rel="noopener"' : "") +
+          return '<a class="' + (claro ? "com-fundo" : "") + '" href="' + esc(p.url || "#/") + '"' +
+            (externo ? ' target="_blank" rel="noopener"' : "") +
             ' title="' + U.attr(p.desc || p.nome) + '">' + dentro + "</a>";
         }).join("") + "</div></div></section>" : "");
   };
@@ -1182,7 +1184,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=20";
+    s.src = "js/admin.js?v=21";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;
