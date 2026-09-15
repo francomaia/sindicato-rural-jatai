@@ -376,26 +376,47 @@
             '<div class="links"><a class="btn btn-light btn-sm" href="' + esc(info.youtube || "#/leilao") + '"' + (info.youtube ? ' target="_blank" rel="noopener"' : "") + ">" + I.play + " Assistir ao vivo</a>" +
             '<a class="btn btn-outline-w btn-sm" href="#/leilao">Regulamento</a></div>' +
           "</div>" +
-          '<div class="panel cot-widget">' +
-            '<div class="tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="agri">Agricultura</button><button type="button" role="tab" aria-selected="false" data-tab="pec">Pecuária</button></div>' +
-            '<div class="tabpanel" data-panel="agri"><ul class="quote-list">' +
-              agri.slice(0, 3).map(function (a) {
-                var ps = (a.compradores || []).map(function (x) { return x.preco; }).filter(function (p) { return p != null && p !== ""; }).map(Number);
-                var v = ps.length ? (ps.length > 1 && Math.min.apply(null, ps) !== Math.max.apply(null, ps)
-                  ? U.brl(Math.min.apply(null, ps)) + " – " + U.brl(Math.max.apply(null, ps)) : U.brl(ps[0])) : "—";
-                return '<li><span class="n">' + esc(a.produto) + '<span class="u">' + esc(a.unidade) + '</span></span><span class="v num">' + v + "</span></li>";
-              }).join("") +
-              '<li><span class="n">Dólar</span><span class="v num">' + U.brl(c.dolar) + varTag(c.dolar - c.dolarAnterior) + "</span></li>" +
-            "</ul></div>" +
-            '<div class="tabpanel" data-panel="pec" hidden><ul class="quote-list">' +
-              pec.map(function (p) {
-                return '<li><span class="n">' + esc(p.produto) + '<span class="u">' + esc(p.unidade) + '</span></span><span class="v num">' + U.brl(p.atual) + varTag(p.anterior != null ? p.atual - p.anterior : 0) + "</span></li>";
-              }).join("") +
-            "</ul></div>" +
-            '<div class="widget-foot"><span>Boletim de ' + U.fmtShort(c.data) + "</span>" +
-            '<a href="#/cotacoes">Ver tudo ' + I.right + "</a></div>" +
           "</div></div>" +
       "</section>" +
+
+      /* Boletim de cotações em largura total */
+      '<section class="section wrap reveal"><div class="boletim">' +
+        '<div class="bol-topo">' +
+          '<div class="bol-id"><h2>Cotações do Agro</h2>' +
+          '<span class="bol-data">Boletim de ' + U.fmtShort(c.data) + "</span></div>" +
+          '<div class="tabs" role="tablist">' +
+          '<button type="button" role="tab" aria-selected="true" data-tab="agri">Agricultura</button>' +
+          '<button type="button" role="tab" aria-selected="false" data-tab="pec">Pecuária</button></div>' +
+          '<a class="all" href="#/cotacoes">Boletim completo</a>' +
+        "</div>" +
+        '<div class="tabpanel" data-panel="agri"><div class="bol-grade">' +
+          agri.map(function (a) {
+            var ps = (a.compradores || []).map(function (x) { return x.preco; })
+              .filter(function (p) { return p != null && p !== ""; }).map(Number);
+            var v = "—";
+            if (ps.length) {
+              var min = Math.min.apply(null, ps), max = Math.max.apply(null, ps);
+              v = (min !== max) ? U.brl(min) + " – " + U.brl(max) : U.brl(min);
+            }
+            return '<div class="bol-item"><span class="bi-nome">' + esc(a.produto) + "</span>" +
+              '<b class="num">' + v + "</b>" +
+              '<span class="bi-un">' + esc(a.unidade || "") + "</span></div>";
+          }).join("") +
+          '<div class="bol-item destaque"><span class="bi-nome">Dólar</span>' +
+          '<b class="num">' + U.brl(c.dolar) + "</b>" +
+          '<span class="bi-un">' + (c.dolarAnterior != null ? "vs. " + U.brl(c.dolarAnterior) : "") + "</span>" +
+          varTag(c.dolar - c.dolarAnterior) + "</div>" +
+        "</div></div>" +
+        '<div class="tabpanel" data-panel="pec" hidden><div class="bol-grade">' +
+          pec.map(function (p) {
+            return '<div class="bol-item"><span class="bi-nome">' + esc(p.produto) + "</span>" +
+              '<b class="num">' + U.brl(p.atual) + "</b>" +
+              '<span class="bi-un">' + esc(p.unidade || "") + "</span>" +
+              varTag(p.anterior != null ? p.atual - p.anterior : 0) + "</div>";
+          }).join("") +
+        "</div></div>" +
+        '<p class="bol-nota">' + esc(c.nota || "") + "</p>" +
+      "</div></section>" +
 
       /* Notícias */
       '<section class="section wrap reveal">' + sec("Notícias e avisos", { href: "#/noticias", t: "Ver todas" }) +
@@ -415,12 +436,9 @@
       /* Espaços */
       (locacoes.length ? '<section class="section wrap reveal">' +
         sec("Espaços para locação", { href: "#/locacoes", t: "Todos os espaços" }, "Do salão de reunião para 25 pessoas ao pavilhão para 3.000, na sede e no Parque de Exposições.") +
-        '<div class="hscroll">' + locacoes.map(function (l) {
-          return '<a class="space-card" href="#/locacoes?ir=' + esc(U.slugify(l.nome)) + '">' +
-            '<div class="img"><img src="' + esc(U.img(l.img || "assets/img/sede.jpg")) + '" alt="" loading="lazy" decoding="async"></div>' +
-            '<div class="body"><h3>' + esc(l.nome) + "</h3>" +
-            '<span class="cap"><b class="num">' + esc(l.capacidade) + "</b> pessoas</span></div></a>";
-        }).join("") + "</div></section>" : "") +
+        '<div class="esteira" style="--n:' + locacoes.length + '"><div class="esteira-fita">' +
+          cartaoEspaco(locacoes, false) + cartaoEspaco(locacoes, true) +
+        "</div></div></section>" : "") +
 
       /* Equoterapia */
       '<section class="section wrap reveal"><div class="equo">' +
@@ -460,11 +478,27 @@
       "</section>" +
 
       /* Parceiros */
-      (parceiros.length ? '<section class="section wrap reveal">' + sec("Parceiros institucionais") +
-        '<div class="partners">' + parceiros.map(function (p) {
-          return '<a href="' + esc(p.url) + '" target="_blank" rel="noopener"><b>' + esc(p.nome) + "</b><small>" + esc(p.desc) + "</small></a>";
-        }).join("") + "</div></section>" : "");
+      (parceiros.length ? '<section class="section faixa-parceiros reveal"><div class="wrap">' +
+        '<h2 class="fp-titulo">Parceiros institucionais</h2>' +
+        '<div class="fp-logos">' + parceiros.map(function (p) {
+          var externo = /^https?:/.test(p.url || "");
+          var dentro = p.logo
+            ? '<img src="' + esc(p.logo) + '" alt="' + U.attr(p.nome) + '" loading="lazy" decoding="async">'
+            : '<span class="fp-nome">' + esc(p.nome) + "</span>";
+          return '<a href="' + esc(p.url || "#/") + '"' + (externo ? ' target="_blank" rel="noopener"' : "") +
+            ' title="' + U.attr(p.desc || p.nome) + '">' + dentro + "</a>";
+        }).join("") + "</div></div></section>" : "");
   };
+  function cartaoEspaco(lista, copia) {
+    return lista.map(function (l) {
+      return '<a class="space-card" href="#/locacoes?ir=' + esc(U.slugify(l.nome)) + '"' +
+        (copia ? ' aria-hidden="true" tabindex="-1"' : "") + ">" +
+        '<div class="img"><img src="' + esc(U.img(l.img || "assets/img/sede.jpg")) + '" alt="" loading="lazy" decoding="async"></div>' +
+        '<div class="body"><h3>' + esc(l.nome) + "</h3>" +
+        '<span class="cap"><b class="num">' + esc(l.capacidade) + "</b> pessoas</span></div></a>";
+    }).join("");
+  }
+
   function heroVideo() {
     var h = C.get("heroVideo") || {};
     if (String(h.ativo || "").toLowerCase() === "nao" || !h.video) return "";
@@ -1148,7 +1182,7 @@
     if (adminCarregando || SRJ.Admin) return;
     adminCarregando = true;
     var s = document.createElement("script");
-    s.src = "js/admin.js?v=16";
+    s.src = "js/admin.js?v=20";
     s.onload = function () { adminCarregando = false; if (State.rota.parts[0] === "redacao") render(); };
     s.onerror = function () {
       adminCarregando = false;

@@ -300,10 +300,11 @@ SRJ.defaults = {
 
   /* ---------------- Parceiros institucionais (rodapé da home) ---------------- */
   parceiros: [
-    { nome: "Faeg", desc: "Federação da Agricultura e Pecuária de Goiás", url: "https://sistemafaeg.com.br/" },
-    { nome: "Senar Goiás", desc: "Serviço Nacional de Aprendizagem Rural", url: "https://sistemafaeg.com.br/senar/" },
-    { nome: "Ifag", desc: "Instituto para o Fortalecimento da Agropecuária de Goiás", url: "https://sistemafaeg.com.br/ifag/" },
-    { nome: "Agrodefesa", desc: "Agência Goiana de Defesa Agropecuária", url: "https://www.agrodefesa.go.gov.br/" }
+    { nome: "Sindicato Rural de Jataí", desc: "Representação do produtor rural do município", url: "#/historia", logo: "assets/logos/sindicato-rural.svg" },
+    { nome: "Faeg", desc: "Federação da Agricultura e Pecuária de Goiás", url: "https://sistemafaeg.com.br/", logo: "assets/logos/faeg.svg" },
+    { nome: "Senar Goiás", desc: "Serviço Nacional de Aprendizagem Rural", url: "https://sistemafaeg.com.br/senar/", logo: "assets/logos/senar.svg" },
+    { nome: "Ifag", desc: "Instituto para o Fortalecimento da Agropecuária de Goiás", url: "https://sistemafaeg.com.br/ifag/", logo: "" },
+    { nome: "Agrodefesa", desc: "Agência Goiana de Defesa Agropecuária", url: "https://www.agrodefesa.go.gov.br/", logo: "" }
   ]
 };
 
@@ -564,6 +565,7 @@ SRJ.schemas = [
   { key: "links", titulo: "Informações do Agro", desc: "Links de serviços externos usados pelo produtor.", tipo: "lista", campos: [
     { k: "nome", l: "Nome" }, { k: "desc", l: "Descrição", t: "area" }, { k: "url", l: "Endereço (link)" },
     { k: "icone", l: "Ícone", t: "select", opcoes: ["ribbon", "chart", "cloud", "doc", "users", "cap", "gavel", "building"] } ]},
-  { key: "parceiros", titulo: "Parceiros institucionais", tipo: "lista", campos: [
-    { k: "nome", l: "Nome" }, { k: "desc", l: "Descrição" }, { k: "url", l: "Link" } ]}
+  { key: "parceiros", titulo: "Parceiros institucionais", desc: "Faixa de logos no fim da página inicial. Sem logo, aparece o nome escrito.", tipo: "lista", campos: [
+    { k: "nome", l: "Nome" }, { k: "desc", l: "Descrição" }, { k: "url", l: "Link" },
+    { k: "logo", l: "Arquivo do logo (versão branca)" } ]}
 ];
