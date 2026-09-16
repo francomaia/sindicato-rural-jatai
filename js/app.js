@@ -21,8 +21,7 @@
      Menu e mapa do site
      ===================================================================== */
   var MENU = [
-    { label: "Início", href: "#/" },
-    { label: "Sobre", items: [
+    { label: "Institucional", items: [
       { label: "História", href: "#/historia" },
       { label: "Diretoria", href: "#/diretoria" },
       { label: "Nossa Equipe", href: "#/equipe" }
@@ -32,16 +31,17 @@
       { label: "Locação de Espaços", href: "#/locacoes" },
       { label: "Cursos e Treinamentos", href: "#/cursos" },
       { label: "Balcão de Emprego Rural", href: "#/balcao-de-emprego" },
-      { label: "Eventos", href: "#/eventos" },
-      { label: "Equoterapia", href: "#/equoterapia" },
-      { label: "Informações do Agro", href: "#/informacoes-do-agro" }
+      { label: "Equoterapia", href: "#/equoterapia" }
     ]},
-    { label: "Notícias", href: "#/noticias" },
-    { label: "Galerias", items: [
+    { label: "Conteúdos", items: [
+      { label: "Notícias e avisos", href: "#/noticias" },
+      { label: "Editais", href: "#/noticias?cat=Editais" },
+      { label: "Eventos e agenda", href: "#/eventos" },
+      { label: "Informações do Agro", href: "#/informacoes-do-agro" },
       { label: "Galeria de Fotos", href: "#/galeria-fotos" },
       { label: "Galeria de Vídeos", href: "#/galeria-videos" }
     ]},
-    { label: "Sócios", items: [
+    { label: "Associados", items: [
       { label: "Clube de Vantagens", href: "#/convenios" },
       { label: "Seja um Novo Associado", href: "#/associe-se" }
     ]},
@@ -317,16 +317,14 @@
     slides.push({ kicker: "Leilão de gado", t: "Toda quarta-feira, às 19h30", p: "Cria, recria e engorda no Parque de Exposições, com transmissão ao vivo e comissão reduzida para associados.", img: "assets/img/leilao.jpg", href: "#/leilao", cta: "Ver regulamento" });
 
     var atalhos = [
-      { t: "Cotações do Agro", h: "#/cotacoes", i: I.chart },
-      { t: "Leilão de Gado", h: "#/leilao", i: I.gavel, hot: true },
-      { t: "Cursos Senar", h: "#/cursos", i: I.cap },
-      { t: "Locação de Espaços", h: "#/locacoes", i: I.building },
-      { t: "Balcão de Emprego", h: "#/balcao-de-emprego", i: I.briefcase },
-      { t: "Equoterapia", h: "#/equoterapia", i: I.horse },
-      { t: "Associe-se", h: "#/associe-se", i: I.userplus, hot: true },
-      { t: "Clube de Vantagens", h: "#/convenios", i: I.percent },
-      { t: "Informações do Agro", h: "#/informacoes-do-agro", i: I.doc },
-      { t: "Galeria de Fotos", h: "#/galeria-fotos", i: I.image }
+      { t: "Cotações do Agro", d: "Preços e boletim regional", h: "#/cotacoes", i: I.chart },
+      { t: "Leilão de Gado", d: "Agenda e regulamento", h: "#/leilao", i: I.gavel, hot: true },
+      { t: "Cursos Senar", d: "Capacitação para o campo", h: "#/cursos", i: I.cap },
+      { t: "Locação de Espaços", d: "Estrutura para seu evento", h: "#/locacoes", i: I.building },
+      { t: "Balcão de Emprego", d: "Oportunidades no setor rural", h: "#/balcao-de-emprego", i: I.briefcase },
+      { t: "Equoterapia", d: "Atendimento gratuito", h: "#/equoterapia", i: I.horse },
+      { t: "Associe-se", d: "Fortaleça sua representação", h: "#/associe-se", i: I.userplus, hot: true },
+      { t: "Clube de Vantagens", d: "Benefícios para associados", h: "#/convenios", i: I.percent }
     ];
 
     var destaqueCards = comImagem(news).slice(0, 3);
@@ -355,16 +353,19 @@
         }).join("") + "</div>" +
         '<button type="button" class="arrow prev" aria-label="Destaque anterior">' + I.left + "</button>" +
         '<button type="button" class="arrow next" aria-label="Próximo destaque">' + I.right + "</button>" +
-        '<div class="dots" role="tablist" aria-label="Destaques">' + slides.map(function (_, k) {
+        '<div class="dots"><div class="dot-tabs" role="tablist" aria-label="Destaques">' + slides.map(function (_, k) {
           return '<button type="button" role="tab" aria-selected="' + (k === 0) + '" aria-label="Destaque ' + (k + 1) + '" class="' + (k === 0 ? "on" : "") + '"><i></i></button>';
-        }).join("") + "</div>" +
+        }).join("") + '</div><button type="button" class="hero-toggle" aria-label="Pausar destaques" aria-pressed="false">' +
+          '<span class="quando-tocando" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5v14M15 5v14"/></svg></span>' +
+          '<span class="quando-pausado" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m9 6 9 6-9 6z"/></svg></span></button></div>' +
       "</section>" +
 
       /* Acesso rápido + leilão + cotações */
       '<section class="section wrap grid-2-1">' +
         '<div class="reveal">' + sec("Acesso rápido") +
           '<div class="quick">' + atalhos.map(function (q, k) {
-            return '<a href="' + q.h + '" class="' + (q.hot ? "hot" : "") + '" style="--i:' + k + '"><span class="ico">' + q.i + "</span><span>" + esc(q.t) + "</span></a>";
+            return '<a href="' + q.h + '" class="' + (q.hot ? "hot" : "") + '" style="--i:' + k + '"><span class="ico">' + q.i + "</span>" +
+              '<span class="quick-copy"><b>' + esc(q.t) + "</b><small>" + esc(q.d) + "</small></span><span class=\"quick-arrow\">" + I.right + "</span></a>";
           }).join("") + "</div></div>" +
         '<div class="reveal" style="--d:80ms">' + sec("Agora no sindicato") +
           '<div class="live-card" id="leilao-card">' +
@@ -434,11 +435,12 @@
         "</aside></div></section>" +
 
       /* Espaços */
-      (locacoes.length ? '<section class="section wrap reveal">' +
+      (locacoes.length ? '<section class="section wrap reveal locacoes-home">' +
         sec("Espaços para locação", { href: "#/locacoes", t: "Todos os espaços" }, "Do salão de reunião para 25 pessoas ao pavilhão para 3.000, na sede e no Parque de Exposições.") +
-        '<div class="esteira" style="--n:' + locacoes.length + '"><div class="esteira-fita">' +
-          cartaoEspaco(locacoes, false) + cartaoEspaco(locacoes, true) +
-        "</div></div></section>" : "") +
+        '<div class="esteira" role="region" aria-label="Espaços disponíveis para locação" style="--n:' + locacoes.length + '">' +
+          '<div class="esteira-fita"><div class="esteira-grupo">' + cartaoEspaco(locacoes, false) + "</div>" +
+          '<div class="esteira-grupo" aria-hidden="true">' + cartaoEspaco(locacoes, true) + "</div></div>" +
+        "</div></section>" : "") +
 
       /* Equoterapia */
       '<section class="section wrap reveal"><div class="equo">' +
@@ -497,7 +499,8 @@
         (copia ? ' aria-hidden="true" tabindex="-1"' : "") + ">" +
         '<div class="img"><img src="' + esc(U.img(l.img || "assets/img/sede.jpg")) + '" alt="" loading="lazy" decoding="async"></div>' +
         '<div class="body"><h3>' + esc(l.nome) + "</h3>" +
-        '<span class="cap"><b class="num">' + esc(l.capacidade) + "</b> pessoas</span></div></a>";
+        '<span class="cap"><b class="num">' + esc(l.capacidade) + "</b> pessoas</span>" +
+        '<span class="space-card-cta">Conhecer espaço ' + I.right + "</span></div></a>";
     }).join("");
   }
 
@@ -507,23 +510,21 @@
     var poster = U.img(h.poster || "");
     return '<section class="hero-video" aria-label="' + U.attr(h.titulo || "Sindicato Rural de Jataí") + '">' +
       '<video id="hv" class="hv-media" ' + (poster ? 'poster="' + esc(poster) + '" ' : "") +
-      'muted loop playsinline autoplay preload="none" tabindex="-1" aria-hidden="true" ' +
-      'data-src="' + esc(h.video) + '"></video>' +
-      '<div class="hv-veu"></div>' +
-      '<div class="wrap hv-cont">' +
-      (h.eyebrow ? '<span class="hv-olho">' + esc(h.eyebrow) + "</span>" : "") +
-      (h.titulo ? "<h1>" + esc(h.titulo) + "</h1>" : "") +
-      (h.texto ? "<p>" + esc(h.texto) + "</p>" : "") +
-      '<div class="hv-acoes">' +
-      (h.cta1Texto ? '<a class="btn btn-accent" href="' + esc(h.cta1Link || "#/") + '">' + esc(h.cta1Texto) + " " + I.right + "</a>" : "") +
-      (h.cta2Texto ? '<a class="btn btn-outline-w" href="' + esc(h.cta2Link || "#/") + '">' + esc(h.cta2Texto) + "</a>" : "") +
-      "</div></div>" +
-      "</section>";
+        'muted loop playsinline webkit-playsinline autoplay preload="metadata" tabindex="-1" aria-hidden="true" ' +
+        'data-src="' + esc(h.video) + '"></video><div class="hv-veu"></div>' +
+      '<div class="wrap hv-shell"><div class="hv-cont">' +
+        (h.eyebrow ? '<span class="hv-olho">' + esc(h.eyebrow) + "</span>" : "") +
+        (h.titulo ? "<h1>" + esc(h.titulo) + "</h1>" : "") +
+        (h.texto ? "<p>" + esc(h.texto) + "</p>" : "") +
+        '<div class="hv-acoes">' +
+        (h.cta1Texto ? '<a class="btn btn-accent" href="' + esc(h.cta1Link || "#/") + '">' + esc(h.cta1Texto) + " " + I.right + "</a>" : "") +
+        (h.cta2Texto ? '<a class="btn btn-outline-w" href="' + esc(h.cta2Link || "#/") + '">' + esc(h.cta2Texto) + "</a>" : "") +
+        '</div><span class="hv-selo"><i></i> Campo, tecnologia e representação</span>' +
+      "</div></div></section>";
   }
 
-  /* Carrega o vídeo em tela larga e fora do modo de economia de dados.
-     No celular fica só a imagem, para não gastar o pacote de quem acessa
-     pelo 4G. */
+  /* Carrega o vídeo no desktop e no celular. O modo de economia de dados e
+     conexões 2G continuam mostrando apenas o poster. */
   function ligarHeroVideo() {
     var v = $("#hv");
     if (!v) return;
@@ -532,21 +533,12 @@
     if (conexao.saveData || lento) return;
     var src = v.getAttribute("data-src");
     if (!src) return;
-    /* Em tela estreita fica só o poster, para não gastar o pacote de dados.
-       Se a janela crescer depois, o vídeo entra. */
-    if (window.innerWidth < 820) {
-      var aoRedimensionar = function () {
-        if (window.innerWidth >= 820) {
-          window.removeEventListener("resize", aoRedimensionar);
-          if (document.body.contains(v)) ligarHeroVideo();
-        }
-      };
-      window.addEventListener("resize", aoRedimensionar);
-      return;
-    }
 
     v.muted = true;            // exigido pelos navegadores para tocar sozinho
     v.defaultMuted = true;
+    v.setAttribute("muted", "");
+    v.setAttribute("playsinline", "");
+    v.setAttribute("webkit-playsinline", "");
     v.setAttribute("src", src);
     v.load();
     v.addEventListener("playing", function () { v.classList.add("tocando"); }, { once: true });
@@ -557,14 +549,54 @@
     }
     tocar();
     v.addEventListener("canplay", tocar, { once: true });
-    /* Alguns navegadores só liberam depois de um toque na página. */
+    /* Em modos que bloqueiam autoplay, o primeiro toque libera a reprodução. */
     var naPrimeiraInteracao = function () {
       if (v.paused) tocar();
       document.removeEventListener("pointerdown", naPrimeiraInteracao);
+      document.removeEventListener("touchstart", naPrimeiraInteracao);
       document.removeEventListener("keydown", naPrimeiraInteracao);
     };
     document.addEventListener("pointerdown", naPrimeiraInteracao, { passive: true });
+    document.addEventListener("touchstart", naPrimeiraInteracao, { passive: true });
     document.addEventListener("keydown", naPrimeiraInteracao);
+  }
+
+  /* Fallback do marquee para navegadores que desativam animações CSS.
+     Em dispositivos touch a faixa permanece manual e arrastável. */
+  function ligarEsteira() {
+    var area = $(".locacoes-home .esteira");
+    var fita = area && $(".esteira-fita", area);
+    var grupo = fita && $(".esteira-grupo", fita);
+    if (!area || !fita || !grupo) return;
+
+    var toque = window.matchMedia && window.matchMedia("(pointer: coarse)").matches &&
+      !window.matchMedia("(hover: hover)").matches;
+    if (toque || window.innerWidth <= 680) return;
+
+    /* Se a animação CSS já está ativa, ela é mais eficiente e assume a faixa. */
+    if (window.getComputedStyle && getComputedStyle(fita).animationName !== "none") return;
+
+    var x = 0, anterior = 0, pausado = false;
+    area.classList.add("marquee-js");
+
+    function quadro(agora) {
+      if (!document.body.contains(fita)) return;
+      if (!anterior) anterior = agora;
+      if (!pausado) {
+        x += Math.min(40, agora - anterior) * .045;
+        var largura = grupo.getBoundingClientRect().width;
+        if (largura && x >= largura) x %= largura;
+        fita.style.setProperty("transform", "translate3d(" + (-x) + "px,0,0)", "important");
+      }
+      anterior = agora;
+      requestAnimationFrame(quadro);
+    }
+
+    area.addEventListener("focusin", function () { pausado = true; });
+    area.addEventListener("focusout", function () {
+      setTimeout(function () { pausado = area.contains(document.activeElement); }, 0);
+    });
+    requestAnimationFrame(quadro);
   }
 
   function statBox(v, l) { return '<div class="stat"><b class="num" data-count="' + esc(v) + '">' + esc(v) + "</b><small>" + esc(l) + "</small></div>"; }
@@ -577,6 +609,7 @@
   function afterHome() {
     ligarHeroVideo();
     carrossel();
+    ligarEsteira();
     $$("[data-tab]").forEach(function (b) {
       b.addEventListener("click", function () {
         $$("[data-tab]").forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); });
@@ -597,7 +630,8 @@
 
   function carrossel() {
     var hero = $(".hero"); if (!hero) return;
-    var slides = $$(".slide", hero), dots = $$(".dots button", hero), i = 0, timer = null;
+    var slides = $$(".slide", hero), dots = $$(".dots button[role=tab]", hero), i = 0, timer = null;
+    var toggle = $(".hero-toggle", hero), pausado = false;
     if (slides.length < 2) { $$(".arrow", hero).forEach(function (a) { a.remove(); }); $(".dots", hero).remove(); return; }
     function ir(n) {
       i = (n + slides.length) % slides.length;
@@ -606,14 +640,19 @@
     }
     function auto() {
       clearInterval(timer);
-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      timer = setInterval(function () { ir(i + 1); }, 7000);
+      if (pausado) return;
+      timer = setInterval(function () { ir(i + 1); }, 6500);
     }
     $(".prev", hero).addEventListener("click", function () { ir(i - 1); auto(); });
     $(".next", hero).addEventListener("click", function () { ir(i + 1); auto(); });
     dots.forEach(function (d, k) { d.addEventListener("click", function () { ir(k); auto(); }); });
-    hero.addEventListener("mouseenter", function () { clearInterval(timer); });
-    hero.addEventListener("mouseleave", auto);
+    if (toggle) toggle.addEventListener("click", function () {
+      pausado = !pausado;
+      hero.classList.toggle("pausado", pausado);
+      toggle.setAttribute("aria-pressed", String(pausado));
+      toggle.setAttribute("aria-label", pausado ? "Retomar destaques" : "Pausar destaques");
+      if (pausado) clearInterval(timer); else auto();
+    });
     hero.addEventListener("keydown", function (e) {
       if (e.key === "ArrowLeft") { ir(i - 1); auto(); }
       if (e.key === "ArrowRight") { ir(i + 1); auto(); }
